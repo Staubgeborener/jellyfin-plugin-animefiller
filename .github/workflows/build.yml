@@ -1,0 +1,122 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [ "main" ]
+    tags:     [ "v*" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.x
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore -c Release
+
+      - name: Test
+        run: dotnet test --no-build -c Release --verbosity normal
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.x
+
+      - name: Publish plugin
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          dotnet publish Jellyfin.Plugin.AnimeFiller/Jellyfin.Plugin.AnimeFiller.csproj \
+            -c Release \
+            -o publish/ \
+            -p:AssemblyVersion=$VERSION \
+            -p:FileVersion=$VERSION
+
+      - name: Package ZIP
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+
+          # Patch meta.json with the real version and current timestamp
+          jq --arg v "$VERSION" \
+             --arg t "$(date -u +%Y-%m-%dT%H:%M:%S.0000000+00:00)" \
+             '.version=$v | .timestamp=$t' \
+             Jellyfin.Plugin.AnimeFiller/meta.json > meta_patched.json
+          mv meta_patched.json Jellyfin.Plugin.AnimeFiller/meta.json
+
+          mkdir -p "AnimeFiller_${VERSION}"
+          cp publish/Jellyfin.Plugin.AnimeFiller.dll "AnimeFiller_${VERSION}/"
+          cp publish/HtmlAgilityPack.dll              "AnimeFiller_${VERSION}/" 2>/dev/null || true
+          cp Jellyfin.Plugin.AnimeFiller/meta.json    "AnimeFiller_${VERSION}/"
+          zip -r "AnimeFiller_${VERSION}.zip" "AnimeFiller_${VERSION}/"
+
+      - name: Compute checksum
+        run: |
+          CHECKSUM=$(md5sum "AnimeFiller_${VERSION}.zip" | awk '{print $1}')
+          echo "CHECKSUM=${CHECKSUM}" >> $GITHUB_ENV
+
+      - name: Update manifest.json
+        run: |
+          python3 - <<'EOF'
+          import json, os
+          from datetime import datetime, timezone
+
+          version  = os.environ['VERSION']
+          checksum = os.environ['CHECKSUM']
+          repo     = os.environ['GITHUB_REPOSITORY']
+          tag      = os.environ['GITHUB_REF_NAME']
+
+          new_entry = {
+              "checksum":  checksum,
+              "changelog": "See GitHub release notes.",
+              "targetAbi": "10.11.0.0",
+              "sourceUrl": f"https://github.com/{repo}/releases/download/{tag}/AnimeFiller_{version}.zip",
+              "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.0000000+00:00"),
+              "version":   version
+          }
+
+          with open("manifest.json") as f:
+              manifest = json.load(f)
+
+          manifest[0]["versions"] = [v for v in manifest[0]["versions"] if v["version"] != version]
+          manifest[0]["versions"].insert(0, new_entry)
+
+          with open("manifest.json", "w") as f:
+              json.dump(manifest, f, indent=2)
+          EOF
+
+      - name: Commit updated manifest.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout Jellyfin.Plugin.AnimeFiller/meta.json
+          git add manifest.json
+          git commit -m "chore: update manifest for v${VERSION}"
+          git push origin main
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: AnimeFiller_*.zip

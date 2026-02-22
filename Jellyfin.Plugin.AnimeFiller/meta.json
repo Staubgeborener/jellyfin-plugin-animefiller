@@ -1,0 +1,13 @@
+{
+  "category": "General",
+  "changelog": "Initial release.",
+  "description": "Mark anime filler episodes with [F] and mixed cannon/filler with [C/F] in episode title.",
+  "guid": "d4c3b2a1-f5e6-7890-abcd-ef0987654321",
+  "imageUrl": "",
+  "name": "Anime Filler Marker",
+  "overview": "Use animefillerlist.com to automatically flag filler episodes.",
+  "owner": "Staubgeborener",
+  "targetAbi": "10.11.0.0",
+  "timestamp": "2025-01-01T00:00:00.0000000+00:00",
+  "version": "1.0.0.0"
+}

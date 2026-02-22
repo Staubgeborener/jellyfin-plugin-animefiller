@@ -1,0 +1,12 @@
+[
+  {
+    "category": "General",
+    "description": "Marks anime filler episodes with [F] and mixed canon/filler episodes with [C/F] in the episode title.",
+    "guid": "d4c3b2a1-f5e6-7890-abcd-ef0987654321",
+    "imageUrl": "",
+    "name": "Anime Filler Marker",
+    "overview": "Use animefillerlist.com to automatically flag filler episodes.",
+    "owner": "Staubgeborener",
+    "versions": []
+  }
+]

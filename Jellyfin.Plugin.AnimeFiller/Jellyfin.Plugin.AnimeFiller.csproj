@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <AssemblyName>Jellyfin.Plugin.AnimeFiller</AssemblyName>
+    <RootNamespace>Jellyfin.Plugin.AnimeFiller</RootNamespace>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>CS1591</NoWarn>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <!--
+    Build instructions:
+    1. dotnet restore
+    2. dotnet build -c Release
+    3. Copy DLLs from bin/Release/net9.0/ and meta.json to the Jellyfin plugin folder:
+       Linux:   /var/lib/jellyfin/plugins/AnimeFiller_1.0.0.0/
+       Windows: %APPDATA%\Jellyfin\plugins\AnimeFiller_1.0.0.0\
+    4. Restart Jellyfin
+    5. Run the "Anime Filler Marker" task manually or let it run on its daily schedule
+  -->
+
+  <ItemGroup>
+    <EmbeddedResource Include="configPage.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Jellyfin SDK – https://www.nuget.org/packages/Jellyfin.Controller -->
+    <PackageReference Include="Jellyfin.Controller" Version="10.11.0" />
+    <!-- HTML parser for animefillerlist.com -->
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Jellyfin.Plugin.AnimeFiller.Tests/Jellyfin.Plugin.AnimeFiller.Tests.csproj" />
+  <Project Path="Jellyfin.Plugin.AnimeFiller/Jellyfin.Plugin.AnimeFiller.csproj" />
+</Solution>
