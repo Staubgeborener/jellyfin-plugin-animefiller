@@ -7,6 +7,15 @@
     "name": "Anime Filler Marker",
     "overview": "Use animefillerlist.com to automatically flag filler episodes.",
     "owner": "Staubgeborener",
-    "versions": []
+    "versions": [
+      {
+        "checksum": "a596e8c7935ee514aa4b624a37f3679b",
+        "changelog": "See GitHub release notes.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/Staubgeborener/jellyfin-plugin-animefiller/releases/download/v1.0.0/AnimeFiller_1.0.0.zip",
+        "timestamp": "2026-02-22T15:48:18.0000000+00:00",
+        "version": "1.0.0"
+      }
+    ]
   }
 ]
