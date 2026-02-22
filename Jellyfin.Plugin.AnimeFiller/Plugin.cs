@@ -20,16 +20,6 @@ public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
 
     public static Plugin? Instance { get; private set; }
 
-    // Return a 3-component version (1.0.1 instead of 1.0.1.0)
-    public override Version Version
-    {
-        get
-        {
-            var v = GetType().Assembly.GetName().Version;
-            return v is null ? new Version(1, 0, 0) : new Version(v.Major, v.Minor, v.Build);
-        }
-    }
-
     public override string Name => "Anime Filler Marker";
 
     public override Guid Id => Guid.Parse("d4c3b2a1-f5e6-7890-abcd-ef0987654321");
