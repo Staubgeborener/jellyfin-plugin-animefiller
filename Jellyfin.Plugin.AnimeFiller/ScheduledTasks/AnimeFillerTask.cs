@@ -35,7 +35,7 @@ public class AnimeFillerTask : IScheduledTask
     public string Name => "Anime Filler Marker";
     public string Key => "AnimeFillerMarker";
     public string Description => "Marks anime filler episodes with [F] and mixed canon/filler episodes with [C/F] in the episode title.";
-    public string Category => "Library";
+    public string Category => "TasksLibraryCategory";
 
     public IEnumerable<TaskTriggerInfo> GetDefaultTriggers()
     {
@@ -95,7 +95,7 @@ public class AnimeFillerTask : IScheduledTask
                 var slug = await _client.FindShowSlugAsync(series.Name, cancellationToken).ConfigureAwait(false);
                 if (slug is null)
                 {
-                    _logger.LogDebug("No AFL entry for '{Name}' – skipping.", series.Name);
+                    _logger.LogInformation("No AFL entry for '{Name}' – skipping.", series.Name);
                     continue;
                 }
 

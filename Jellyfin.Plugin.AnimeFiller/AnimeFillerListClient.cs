@@ -65,6 +65,17 @@ public class AnimeFillerListClient
             }
         }
 
+        // 3. Space-insensitive match (e.g. "Dragonball Z" vs "Dragon Ball Z")
+        var normalizedNoSpace = normalized.Replace(" ", "");
+        foreach (var (name, slug) in index)
+        {
+            if (NormalizeName(name).Replace(" ", "") == normalizedNoSpace)
+            {
+                _logger.LogDebug("Space-insensitive match: '{SeriesName}' -> '{AflName}' ({Slug})", seriesName, name, slug);
+                return slug;
+            }
+        }
+
         return null;
     }
 
