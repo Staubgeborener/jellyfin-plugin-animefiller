@@ -23,8 +23,6 @@ Then install *Anime Filler Marker* from the catalog and restart Jellyfin.
 | Setting | Default | Description |
 |---|---|---|
 | Mark filler episodes | on | Prepends `[F]` to filler episode titles |
-| Filler prefix | `[F]` | Customizable prefix |
 | Mark mixed episodes | on | Prepends `[C/F]` to mixed canon/filler titles |
-| Mixed prefix | `[C/F]` | Customizable prefix |
 
 The task runs daily at 03:00 and can also be triggered manually under **Dashboard → Scheduled Tasks**.

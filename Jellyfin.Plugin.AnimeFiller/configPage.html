@@ -8,12 +8,10 @@
     <div id="AnimeFillerMarkerConfigPage"
          data-role="page"
          class="page type-interior pluginConfigurationPage"
-         data-require="emby-input,emby-button,emby-checkbox"
+         data-require="emby-button,emby-checkbox"
          data-pluginuniqueid="d4c3b2a1-f5e6-7890-abcd-ef0987654321">
         <div data-role="content">
             <div class="content-primary">
-
-                <p style="color:gray;font-size:0.75em;margin-bottom:1em;">AnimeFiller Config v1.0.0</p>
 
                 <form id="AnimeFillerForm">
 
@@ -22,13 +20,7 @@
                             <input is="emby-checkbox" type="checkbox" id="MarkFiller" />
                             <span>Mark filler episodes</span>
                         </label>
-                        <div class="fieldDescription">Prepends the filler prefix (e.g.&nbsp;[F]) to the episode title.</div>
-                    </div>
-
-                    <div class="inputContainer">
-                        <label class="inputLabel inputLabelUnfocused" for="FillerSuffix">Filler prefix</label>
-                        <input is="emby-input" type="text" id="FillerSuffix" />
-                        <div class="fieldDescription">Default: [F]</div>
+                        <div class="fieldDescription">Prepends [F] to filler episode titles.</div>
                     </div>
 
                     <div class="checkboxContainer checkboxContainer-withDescription">
@@ -36,13 +28,7 @@
                             <input is="emby-checkbox" type="checkbox" id="MarkMixedEpisodes" />
                             <span>Mark mixed canon/filler episodes</span>
                         </label>
-                        <div class="fieldDescription">Prepends the mixed prefix (e.g.&nbsp;[C/F]) to the episode title.</div>
-                    </div>
-
-                    <div class="inputContainer">
-                        <label class="inputLabel inputLabelUnfocused" for="MixedSuffix">Mixed prefix</label>
-                        <input is="emby-input" type="text" id="MixedSuffix" />
-                        <div class="fieldDescription">Default: [C/F]</div>
+                        <div class="fieldDescription">Prepends [C/F] to mixed canon/filler episode titles.</div>
                     </div>
 
                     <div class="fieldDescription" style="margin-bottom:1em">
@@ -70,9 +56,7 @@
                     Dashboard.showLoadingMsg();
                     ApiClient.getPluginConfiguration(AnimeFillerConfig.pluginUniqueId).then(function (config) {
                         document.querySelector('#MarkFiller').checked        = config.MarkFiller;
-                        document.querySelector('#FillerSuffix').value        = config.FillerSuffix        || '[F]';
                         document.querySelector('#MarkMixedEpisodes').checked = config.MarkMixedEpisodes;
-                        document.querySelector('#MixedSuffix').value         = config.MixedSuffix         || '[C/F]';
                         Dashboard.hideLoadingMsg();
                     });
                 });
@@ -82,9 +66,7 @@
                     Dashboard.showLoadingMsg();
                     ApiClient.getPluginConfiguration(AnimeFillerConfig.pluginUniqueId).then(function (config) {
                         config.MarkFiller        = document.querySelector('#MarkFiller').checked;
-                        config.FillerSuffix      = document.querySelector('#FillerSuffix').value;
                         config.MarkMixedEpisodes = document.querySelector('#MarkMixedEpisodes').checked;
-                        config.MixedSuffix       = document.querySelector('#MixedSuffix').value;
                         ApiClient.updatePluginConfiguration(AnimeFillerConfig.pluginUniqueId, config).then(function (result) {
                             Dashboard.processPluginConfigurationUpdateResult(result);
                         });

@@ -49,12 +49,13 @@ public class AnimeFillerTask : IScheduledTask
 
     public async Task ExecuteAsync(IProgress<double> progress, CancellationToken cancellationToken)
     {
-        var config       = Plugin.Instance!.Configuration;
-        var fillerSuffix = config.FillerSuffix;        // e.g. "[F]"
-        var mixedSuffix  = config.MixedSuffix;         // e.g. "[C/F]"
-        var markFiller   = config.MarkFiller;
-        var markMixed    = config.MarkMixedEpisodes;
-        var nothingMode  = !markFiller && !markMixed;  // strip all markings
+        const string fillerSuffix = "[F]";
+        const string mixedSuffix  = "[C/F]";
+
+        var config      = Plugin.Instance!.Configuration;
+        var markFiller  = config.MarkFiller;
+        var markMixed   = config.MarkMixedEpisodes;
+        var nothingMode = !markFiller && !markMixed;  // strip all markings
 
         _logger.LogInformation(
             "Config: MarkFiller={MarkFiller}, MarkMixed={MarkMixed}, NothingMode={NothingMode}",
