@@ -9,6 +9,14 @@
     "owner": "Staubgeborener",
     "versions": [
       {
+        "checksum": "4950c361d153d19c3ef01c04c5005ef5",
+        "changelog": "See GitHub release notes.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/Staubgeborener/jellyfin-plugin-animefiller/releases/download/v1.0.0.2/AnimeFiller_1.0.0.2.zip",
+        "timestamp": "2026-02-22T16:53:38.0000000+00:00",
+        "version": "1.0.0.2"
+      },
+      {
         "checksum": "2b5c9785f4006366027d33392530a57f",
         "changelog": "See GitHub release notes.",
         "targetAbi": "10.11.0.0",
