@@ -6,7 +6,7 @@ Automatically marks anime filler episodes in your Jellyfin library using data fr
 - Mixed canon/filler episodes get a `[C/F]` prefix (optional)
 - Disabling both removes all existing markers on the next run
 
-There is already a project called [Ronan](https://github.com/ahza-code/jellyfin-plugin-ronin) that automatically detects and marks fillers and mixed/fillers with badges. And indeed it does a great job. Unfortunately, these badges are only displayed in the Jellyfin web UI (i.e. Browser), but not in the [Jellyfin apk](https://github.com/jellyfin/jellyfin-android) which i like to use for my SmartTV. This project helps here: We don't have badges, but we can see at a glance from the episode name whether we can skip it or not. 
+There is already a project called [Ronin](https://github.com/ahza-code/jellyfin-plugin-ronin) that automatically detects and marks fillers and mixed/fillers with badges. And indeed it does a great job. Unfortunately, these badges are only displayed in the Jellyfin web UI (i.e. Browser), but not in the [Jellyfin apk](https://github.com/jellyfin/jellyfin-android) which i like to use for my SmartTV. This project helps here: We don't have badges, but we can see at a glance from the episode name whether we can skip it or not. 
 
 ## Installation
 
